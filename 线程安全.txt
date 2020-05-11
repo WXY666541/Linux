@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <unistd.h>
+#include <string.h>
+#include <pthread.h>
+#include <fcntl.h>
+
+//用锁解决访问临界区保证线程安全的问题
+void *fun(void *arg)
+{
+    int i = 0;
+    for(;i<10000;i++)
+    {
+        pthread_mutex_lock(&mutex);
+        g++;
+        pthread_mutex_unlock(&mutex);
+    }
+}
+int main()
+{
+    pthread_mutex_init(&mutex,NULL);
+    pthread_t id;
+    int res = pthread_create(&id,NULL,fun,NULL);
+    assert(res == 0)
+
+    int i = 0;
+    for(;i<10000;i++)
+    {
+        pthread_mutex_lock(&mutex);
+        g++;
+        pthread_mutex_unlock(&mutex);
+    }
+    pthread_join(id.NULL);
+    printf("g = %d\n,g);
+    exit(0);
+}
+
+//使用可重入函数保证线程安全
+void* fun(void *arg)
+{
+    char buff[] = "1 2 3 4 5 6 7 8";
+    char *q = NULL;
+    char *p = strtok_r(buff," ",&q);
+    while(p!= NULL)
+    {
+        printf("fun:%s\n",p);
+        p = strtok_r(NULL," ",&q);
+        sleep(1);
+    }
+}
+int main()
+{
+    pthread_t id;
+    int res = pthread_create(&id,NULL,fun,NULL);
+    assert(res == 0);
+
+    char str[] = "a b c d e f g h";
+     char *q = NULL;
+    char *p = strtok_r(buff," ",&q);
+    while(p!= NULL)
+    {
+        printf("fun:%s\n",p);
+        p = strtok_r(NULL," ",&q);
+        sleep(1);
+    }
+    pthread_exit(0);
+}
+
