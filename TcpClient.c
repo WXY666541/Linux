@@ -35,7 +35,7 @@ int main()
 		}
 
 		int num = send(sockfd, data, strlen(data) - 1, 0);
-		assert(num != -1);
+		assert(num != -1）；
 		if(num == 0)
 		{
 			printf("the length that send is zero\n");
